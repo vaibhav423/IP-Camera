@@ -16,8 +16,8 @@ jobs:
     - name: Set up JDK
       uses: actions/setup-java@v3
       with:
-        java-version: '11'
-        distribution: 'adopt'
+        java-version: '11'            # Specify the Java version
+        distribution: 'adopt'         # Use the AdoptOpenJDK distribution
 
     - name: Install Android SDK
       run: |
@@ -27,12 +27,14 @@ jobs:
         mkdir -p $HOME/android-sdk/cmdline-tools
         unzip commandlinetools-linux-8092744_latest.zip -d $HOME/android-sdk/cmdline-tools
         rm commandlinetools-linux-8092744_latest.zip
-        yes | $HOME/android-sdk/cmdline-tools/cmdline-tools/bin/sdkmanager --sdk_root=$HOME/android-sdk "platform-tools" "platforms;android-30" "build-tools;30.0.3. "
+        yes | $HOME/android-sdk/cmdline-tools/cmdline-tools/bin/sdkmanager --sdk_root=$HOME/android-sdk "platform-tools" "platforms;android-30" "build-tools;30.0.3"
+
     - name: List files
-      run: ls -la  # List files in the current directory
+      run: ls -la  # List files to check the current directory structure
+
     - name: Build APK
       run: |
-        cd Android  # Change directory to Android
+        cd Android  # Change to the correct directory
         ./gradlew assembleDebug  # Run the Gradle build command
 
     - name: Upload APK
